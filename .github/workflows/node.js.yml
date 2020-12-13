@@ -25,4 +25,4 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm install -g youtube-dl
-    - run: youtube-dl -h
+    - run: npx youtube-dl -h
