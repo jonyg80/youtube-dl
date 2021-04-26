@@ -10,8 +10,8 @@ on:
 jobs:
   build:
     env:
-      START: 1
-      END: 20
+      START: 21
+      END: 40
 
     runs-on: ubuntu-latest
 
