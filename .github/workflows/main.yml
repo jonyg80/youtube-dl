@@ -9,6 +9,9 @@ on:
 
 jobs:
   build:
+    env:
+      START: 1
+      END: 30
 
     runs-on: ubuntu-latest
 
@@ -22,26 +25,18 @@ jobs:
       run: |
         sudo apt install aria2 ffmpeg
         
-#     - run: |
-#         mkdir vid
-#         cd vid
-#         youtube-dl --external-downloader aria2c '${{ secrets.URL }}'
-    
     - run: |
-        mkdir vid1
-        cd vid1
-        youtube-dl -f '[height>=?1080]/bestvideo+bestaudio/best' --external-downloader aria2c '${{ secrets.URL }}'
-        
-        
-        
-        
+        mkdir vid
+        cd vid
+        youtube-dl --playlist-start $START --playlist-end $END --write-thumbnail -f '[height>=?1080]/bestvideo+bestaudio/best' --external-downloader aria2c '${{ secrets.URL }}'
+
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2.2.3
       with:
     # Artifact name
-        #name: # optional, default is artifact
+        name: mv_$START-$END# optional, default is artifact
     # A file, directory or wildcard pattern that describes what to upload
-        path: ./
+        path: ./vid
     # The desired behavior if no files are found using the provided path.
 
     
