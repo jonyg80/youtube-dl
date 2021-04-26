@@ -25,17 +25,17 @@ jobs:
     - run: |
         mkdir vid
         cd vid
-        youtube-dl '${{ secrets.URL }}'
+        youtube-dl --external-downloader aria2c '${{ secrets.URL }}'
     
     - run: |
         mkdir vid1
         cd vid
-        youtube-dl -f bestvideo[height>=?1080]+bestaudio/best '${{ secrets.URL }}'
+        youtube-dl -f 'bestvideo[height>=?1080]+bestaudio/best' --external-downloader aria2c '${{ secrets.URL }}'
         
     - run: |
         mkdir vid2
         cd vid
-        youtube-dl -f '[height>=?1080]' '${{ secrets.URL }}'
+        youtube-dl -f '[height>=?1080]' --external-downloader aria2c '${{ secrets.URL }}'
         
         
         
