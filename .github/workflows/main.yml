@@ -18,9 +18,9 @@ jobs:
       run: |
         sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl 
         sudo chmod +x /usr/local/bin/youtube-dl
-    - name: Install aria2c
+    - name: Install aria2c and ffmpeg
       run: |
-        sudo apt install aria2
+        sudo apt install aria2 ffmpeg
         
     - run: |
         mkdir vid
