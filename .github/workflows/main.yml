@@ -11,7 +11,7 @@ jobs:
   build:
     env:
       START: 1
-      END: 30
+      END: 20
 
     runs-on: ubuntu-latest
 
