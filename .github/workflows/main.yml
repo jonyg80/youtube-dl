@@ -29,7 +29,7 @@ jobs:
     
     - run: |
         mkdir vid1
-        cd vi1
+        cd vid1
         youtube-dl -f 'bestvideo[height>=?1080]+bestaudio/best' --external-downloader aria2c '${{ secrets.URL }}'
         
     - run: |
