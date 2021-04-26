@@ -18,7 +18,7 @@ jobs:
       run: |
         sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl 
         sudo chmod +x /usr/local/bin/youtube-dl
-    - run: youtube-dl --playlist-end 10 -- ${{ secrets.URL }}
+    - run: youtube-dl --playlist-end 10 -- '${{ secrets.URL }}'
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2.2.3
       with:
