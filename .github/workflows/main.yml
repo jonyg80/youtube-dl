@@ -24,7 +24,7 @@ jobs:
     - run: |
         mkdir vid
         cd vid
-        youtube-dl --playlist-start 91 --playlist-end 110 --write-thumbnail -f best --external-downloader aria2c -- '${{ secrets.URL }}'
+        youtube-dl -j --playlist-end 10 '${{ secrets.URL }}'
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2.2.3
       with:
