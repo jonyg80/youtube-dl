@@ -35,7 +35,7 @@ jobs:
     - run: |
         mkdir vid2
         cd vid2
-        youtube-dl -f '[height>=?1080][height<=1080]' --external-downloader aria2c '${{ secrets.URL }}'
+        youtube-dl -f '[height>=?1080]bestvideo' --external-downloader aria2c '${{ secrets.URL }}'
     
     - run: |
         mkdir vid3
