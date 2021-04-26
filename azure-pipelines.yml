@@ -1,0 +1,38 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+- name: START
+  value: 21
+- name: END
+  value: 22
+
+steps:
+- script: |
+    sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl
+    sudo chmod a+rx /usr/local/bin/youtube-dl
+  displayName: 'Install Youtube-dl'
+
+- script: |
+    sudo apt install aria2 ffmpeg
+  displayName: 'Install aria2 ffmpeg'
+
+- script: |
+    mkdir vid
+    cd vid
+    youtube-dl --playlist-start=$START --playlist-end=$END --write-thumbnail --external-downloader=aria2c -f '[height>=?1080]/bestvideo+bestaudio/best' -- '$(URL)'
+  displayName: 'Build'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: './vid'
+    ArtifactName: 'mv_$START-$END'
+    publishLocation: 'Container'
