@@ -21,17 +21,31 @@ jobs:
     - name: Install aria2c
       run: |
         sudo apt install aria2
+        
     - run: |
         mkdir vid
         cd vid
-        youtube-dl -j --playlist-end 10 '${{ secrets.URL }}'
+        youtube-dl '${{ secrets.URL }}'
+    
+    - run: |
+        mkdir vid1
+        cd vid
+        youtube-dl -f bestvideo[height>=?1080]+bestaudio/best '${{ secrets.URL }}'
+        
+    - run: |
+        mkdir vid2
+        cd vid
+        youtube-dl -f '[height>=?1080]' '${{ secrets.URL }}'
+        
+        
+        
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2.2.3
       with:
     # Artifact name
         #name: # optional, default is artifact
     # A file, directory or wildcard pattern that describes what to upload
-        path: ./vid
+        path: ./
     # The desired behavior if no files are found using the provided path.
 
     
