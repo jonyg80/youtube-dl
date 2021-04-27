@@ -11,7 +11,7 @@ jobs:
   build:
     env:
       START: 21
-      END: 40
+      END: 35
 
     runs-on: ubuntu-latest
 
@@ -29,12 +29,12 @@ jobs:
     - run: |
         mkdir vid
         cd vid
-        youtube-dl --playlist-start=$START --playlist-end=$END --write-thumbnail --external-downloader=ffmpeg -f '[height>=?1080]/bestvideo+bestaudio/best' -- '${{ secrets.URL }}'
+        youtube-dl --playlist-start=$START --playlist-end=$END --write-thumbnail --external-downloader=aria2c -f '[height>=?1080]/bestvideo+bestaudio/best' -- '${{ secrets.URL }}'
 
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2.2.3
       with:
         # Artifact name
-        name: mv_21-40
+        name: mv_21-35
         # A file, directory or wildcard pattern that describes what to upload
         path: ./vid
