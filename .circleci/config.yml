@@ -1,0 +1,23 @@
+version: 2.1
+jobs: 
+  build: 
+    docker:
+      - image: cimg/python:3.9.4
+    steps: 
+      - checkout # check out the code in the project directory
+      - run: | 
+          sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl
+          sudo chmod a+rx /usr/local/bin/youtube-dl 
+          
+      - run: | 
+          sudo apt update 
+          sudo apt install aria2 ffmpeg wireguard python3
+
+      - run: | 
+          mkdir vid
+          cd vid
+          youtube-dl --playlist-start=1 --playlist-end=50 --write-thumbnail --external-downloader=aria2c -f '[height=1080]/bestvideo+bestaudio/best' -- "${URL}"
+      
+      - store_artifacts:
+          path: ./vid
+          destination: mv_a_1-50
