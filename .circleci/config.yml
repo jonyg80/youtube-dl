@@ -15,13 +15,15 @@ jobs:
 
       - run: |
           wget https://github.com/ipfs/go-ipfs/releases/download/v0.8.0/go-ipfs_v0.8.0_linux-amd64.tar.gz
-          tar –xvzf go-ipfs_v0.8.0_linux-amd64.tar.gz
+          tar -xvzf 'go-ipfs_v0.8.0_linux-amd64.tar.gz'
 
       - run: |
           chmod +x ./go-ipfs/install.sh
           sudo ./go-ipfs/install.sh
       
-      - run: ipfs daemon
+      - run: |
+          ipfs init
+          ipfs daemon
 
       # - run: | 
       #     mkdir vid
