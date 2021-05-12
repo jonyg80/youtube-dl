@@ -22,13 +22,16 @@ jobs:
           sudo ./go-ipfs/install.sh
       
       - run: |
+          sudo sysctl -w net.core.rmem_max=2500000
           ipfs init
-          ipfs daemon
 
-      # - run: | 
-      #     mkdir vid
-      #     cd vid
-      #     youtube-dl -i --playlist-start=151 --playlist-end=200 --write-thumbnail --external-downloader=aria2c -f '[height=1080]/bestvideo+bestaudio/best' -- "${URL}"
+      - run: | 
+          mkdir vid
+          cd vid
+          youtube-dl -i --playlist-start=1 --playlist-end=10 --write-thumbnail --external-downloader=aria2c -f '[height=1080]/bestvideo+bestaudio/best' -- "${URL}"
+      
+      - run: |
+          ipfs add -Q --cid-version 1 -r ./vid
       
       # - store_artifacts:
       #     path: ./vid
