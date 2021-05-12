@@ -22,7 +22,6 @@ jobs:
           sudo ./go-ipfs/install.sh
       
       - run: |
-          sudo sysctl -w net.core.rmem_max=2500000
           ipfs init
 
       - run: | 
@@ -32,6 +31,9 @@ jobs:
       
       - run: |
           ipfs add -Q --cid-version 1 -r ./vid
+     
+      - run: |
+          ipfs daemon
       
       # - store_artifacts:
       #     path: ./vid
