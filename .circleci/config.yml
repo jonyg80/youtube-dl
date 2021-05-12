@@ -13,11 +13,21 @@ jobs:
           sudo apt update 
           sudo apt install aria2 ffmpeg wireguard python3
 
-      - run: | 
-          mkdir vid
-          cd vid
-          youtube-dl -i --playlist-start=151 --playlist-end=200 --write-thumbnail --external-downloader=aria2c -f '[height=1080]/bestvideo+bestaudio/best' -- "${URL}"
+      - run: |
+          wget https://github.com/ipfs/go-ipfs/releases/download/v0.8.0/go-ipfs_v0.8.0_linux-amd64.tar.gz
+          tar –xvzf go-ipfs_v0.8.0_linux-amd64.tar.gz
+
+      - run: |
+          chmod +x ./go-ipfs/install.sh
+          sudo ./go-ipfs/install.sh
       
-      - store_artifacts:
-          path: ./vid
-          destination: mv_a_151-200
+      - run: ipfs daemon
+
+      # - run: | 
+      #     mkdir vid
+      #     cd vid
+      #     youtube-dl -i --playlist-start=151 --playlist-end=200 --write-thumbnail --external-downloader=aria2c -f '[height=1080]/bestvideo+bestaudio/best' -- "${URL}"
+      
+      # - store_artifacts:
+      #     path: ./vid
+      #     destination: mv_a_151-200
