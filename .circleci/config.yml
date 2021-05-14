@@ -3,6 +3,9 @@ jobs:
   build: 
     docker:
       - image: cimg/python:3.9.4
+    environment:
+      START: 451
+      END: 454
     steps: 
       - checkout # check out the code in the project directory
       - run: | 
@@ -12,12 +15,26 @@ jobs:
       - run: | 
           sudo apt update 
           sudo apt install aria2 ffmpeg wireguard python3
-
+      - run: |
+          wget https://github.com/ipfs/go-ipfs/releases/download/v0.8.0/go-ipfs_v0.8.0_linux-amd64.tar.gz
+          tar -xvzf 'go-ipfs_v0.8.0_linux-amd64.tar.gz'
+      - run: |
+          chmod +x ./go-ipfs/install.sh
+          sudo ./go-ipfs/install.sh
+      
+      - run: |
+          ipfs init
       - run: | 
           mkdir vid
           cd vid
-          youtube-dl -i --playlist-start=401 --playlist-end=450 --write-thumbnail --external-downloader=aria2c -f '[height=1080]/bestvideo+bestaudio/best' -- "${URL}"
+          youtube-dl -i --playlist-start=$START --playlist-end=$END --write-thumbnail --external-downloader=aria2c -f '[height=1080]/bestvideo+bestaudio/best' -- "${URL}"
       
-      - store_artifacts:
-          path: ./vid
-          destination: mv_a_401-450
+      - run: 
+          command: |
+            ipfs pin remote service add nft-storage https://api.nft.storage ${NFT_API_KEY}
+            for cid in $(ipfs add -Q --cid-version 1 -r ./vid); do ipfs pin remote add --service=nft-storage --name=mv_y_$START-$END --background $cid; done
+          no_output_timeout: 1h
+     
+      - run:
+          command: ipfs daemon
+          no_output_timeout: 3h
