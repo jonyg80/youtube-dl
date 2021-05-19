@@ -25,7 +25,7 @@ jobs:
       - run: |
           ipfs init
 
-      - run: ipfs ls bafybeihn2f7lhumh4grizksi2fl233cyszqadkn424ptjajfenykpsaiw4
+      - run: ipfs refs -r /ipns/tr.wikipedia-on-ipfs.org
      # - run: | 
        #   mkdir vid
        #   cd vid
