@@ -4,8 +4,8 @@ jobs:
     machine:
       image: ubuntu-2004:202104-01 
     environment:
-      START: 501
-      END: 550
+      START: 551
+      END: 600
     steps: 
       - checkout # check out the code in the project directory
       - run: | 
@@ -33,7 +33,7 @@ jobs:
       
       - store_artifacts:
           path: ./vid
-          destination: mv_a_$START-$END
+          destination: mv_a_${START}-${END}
    #   - run: 
      #     command: |
       #      ipfs pin remote service add nft-storage https://api.nft.storage ${NFT_API_KEY}
