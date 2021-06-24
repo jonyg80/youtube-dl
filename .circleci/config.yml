@@ -4,8 +4,8 @@ jobs:
     machine:
       image: ubuntu-2004:202104-01 
     environment:
-      START: 651  
-      END: 700
+      START: 1  
+      END: 2
     steps: 
       - checkout # check out the code in the project directory
       - run: | 
@@ -27,19 +27,25 @@ jobs:
 
       # - run: ipfs refs -r /ipns/en.wikipedia-on-ipfs.org
       - run: |
-          npm i --global ipfs-car
+          npm i --g ipfs-car ipfs-store
 
       - run: | 
           mkdir vid
           cd vid
           youtube-dl -i --playlist-start=$START --playlist-end=$END --write-thumbnail --external-downloader=aria2c -f '[height=1080]/bestvideo+bestaudio/best' -- "${URL}"
       
-      - run: |
-          ipfs-car --pack ./vid
-
-      - store_artifacts:
-          path: ./vid.car
-          destination: vid.car
+      # - run: 
+      #     command: |
+      #       ipfs-car --pack ./vid
+      #     no_output_timeout: 1h
+      
+      - run:
+          command: |
+            ipfs-store --apiKey "${NFT_API_KEY}" --path "./vid"
+          no_output_timeout: 2h
+      # - store_artifacts:
+      #     path: ./vid.car
+      #     destination: vid.car
     #  - run: 
     #      command: |
     #        ipfs pin remote service add nft-storage https://api.nft.storage ${NFT_API_KEY}
