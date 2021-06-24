@@ -4,8 +4,8 @@ jobs:
     machine:
       image: ubuntu-2004:202104-01 
     environment:
-      START: 1 
-      END: 10
+      START: 651  
+      END: 700
     steps: 
       - checkout # check out the code in the project directory
       - run: | 
@@ -37,9 +37,9 @@ jobs:
       - run: |
           ipfs-car --pack ./vid
 
-    #   - store_artifacts:
-    #       path: ./vid
-    #       destination: mv_a_${START}-${
+      - store_artifacts:
+          path: ./vid.car
+          destination: vid.car
     #  - run: 
     #      command: |
     #        ipfs pin remote service add nft-storage https://api.nft.storage ${NFT_API_KEY}
