@@ -32,7 +32,7 @@ jobs:
       - run: | 
           mkdir vid
           cd vid
-          youtube-dl -i --playlist-start=$START --playlist-end=$END --write-thumbnail --external-downloader=ffmpeg -f '[height=1080]/bestvideo+bestaudio/best' -- "${URL}"
+          youtube-dl -i --playlist-start=$START --playlist-end=$END --write-thumbnail --external-downloader=aria2c -f '[height=1080]/bestvideo+bestaudio/best' -- "${URL}"
       
       # - run: 
       #     command: |
